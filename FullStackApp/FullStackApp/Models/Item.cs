@@ -1,6 +1,6 @@
 ﻿namespace FullStackApp.Models
 {
-    public class Items
+    public class Item
     {
         public int Id { get; set; }
 
