@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FullStackApp.Controllers
 {
-    public class ItemsController1 : Controller
+    public class ItemsController : Controller
     {
         public IActionResult Overview()
         {
@@ -15,5 +15,12 @@ namespace FullStackApp.Controllers
 
             return View(item); 
         }
+
+        public IActionResult Edit(int id) {
+
+            return Content("id= " + id);
+        
+        }
+
     }
 }
