@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FullStackApp.Migrations
 {
-    [DbContext(typeof(AppContext))]
+    [DbContext(typeof(FullStackApp.Data.AppContext))]
     partial class AppContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

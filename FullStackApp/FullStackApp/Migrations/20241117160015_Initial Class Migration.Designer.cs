@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FullStackApp.Migrations
 {
-    [DbContext(typeof(AppContext))]
+    [DbContext(typeof(FullStackApp.Data.AppContext))]
     [Migration("20241117160015_Initial Class Migration")]
     partial class InitialClassMigration
     {
