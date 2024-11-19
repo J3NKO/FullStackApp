@@ -8,6 +8,8 @@ namespace FullStackApp.Controllers
     {
 
         //note here that there is only one Item controller controls all actions etc specific to the Item Model/View
+
+        //This is a readonly variable which holds the data from the App Context file which holds the DbSet
         private readonly Data.AppContext _Context;
 
         public ItemsController(Data.AppContext context)
@@ -18,8 +20,10 @@ namespace FullStackApp.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var item = await _Context.Items.ToListAsync();
+            var item = await _Context.Items.Include(s => s.SerialNumber).ToListAsync();
 
+
+            //here we are sending the item data down to the Index View
             return View(item);
 
         }
@@ -88,5 +92,32 @@ namespace FullStackApp.Controllers
             }
 
         }
+
+        //Action methods for delete requests below
+
+        public async Task<IActionResult> Delete(int id) {
+
+            var item = await _Context.Items.FirstOrDefaultAsync(x => x.Id == id);
+            return View(item);
+                    
+        }
+
+
+        //Note that this uses a Post requet and not a delete request due to code body of DeleteConfirmed method
+        //But also delete requests cannot be triggered by form submissions!
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id) { 
+        
+            var item = await _Context.Items.FindAsync(id);
+            if (item != null) { 
+            
+                _Context.Items.Remove(item);
+                await _Context.SaveChangesAsync();
+            
+            }
+            return RedirectToAction("Index");
+
+        }
+
     }
 }
