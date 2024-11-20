@@ -30,6 +30,13 @@ namespace FullStackApp.Data
 
                 );
 
+            modelBuilder.Entity<Category>().HasData(
+
+                new Category { Id = 1, Name = "Electronics" },
+                new Category { Id = 2, Name = "Books" }
+
+                );
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -39,6 +46,10 @@ namespace FullStackApp.Data
         
             public DbSet<SerialNumber> SerialNumbers { get; set; }
 
+            public DbSet<Category> Categories { get; set; }
+
+
     }
+
 
 }

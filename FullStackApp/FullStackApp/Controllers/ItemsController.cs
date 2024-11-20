@@ -1,5 +1,6 @@
 ﻿using FullStackApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace FullStackApp.Controllers
@@ -20,7 +21,9 @@ namespace FullStackApp.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var item = await _Context.Items.Include(s => s.SerialNumber).ToListAsync();
+            var item = await _Context.Items.Include(s => s.SerialNumber)
+                                        .Include(c => c.Category)
+                                        .ToListAsync();
 
 
             //here we are sending the item data down to the Index View
@@ -31,6 +34,7 @@ namespace FullStackApp.Controllers
         public IActionResult Create()
         {
 
+            ViewData["Categories"] = new SelectList(_Context.Categories, "Id", "Name");
 
             return View();
 
@@ -42,7 +46,7 @@ namespace FullStackApp.Controllers
 
         //Bind to relavant Model
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id, Name, Price")] Item item)
+        public async Task<IActionResult> Create([Bind("Id, Name, Price, CategoryId")] Item item)
         {
 
             if (ModelState.IsValid)
@@ -66,13 +70,15 @@ namespace FullStackApp.Controllers
         public async Task<IActionResult> Edit(int id)
         {
 
+            ViewData["Categories"] = new SelectList(_Context.Categories, "Id", "Name");
+
             var item = await _Context.Items.FirstOrDefaultAsync(x => x.Id == id);
             return View(item);
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Price")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Price, CategoryId")] Item item)
         {
 
             if (ModelState.IsValid)
@@ -103,7 +109,7 @@ namespace FullStackApp.Controllers
         }
 
 
-        //Note that this uses a Post requet and not a delete request due to code body of DeleteConfirmed method
+        //Note that this uses a Post request and not a delete request due to code body of DeleteConfirmed method
         //But also delete requests cannot be triggered by form submissions!
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id) { 

@@ -1,4 +1,6 @@
-﻿namespace FullStackApp.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FullStackApp.Models
 {
     public class Item
     {
@@ -14,6 +16,12 @@
         public int? SerialNumberId { get; set; }
 
         public SerialNumber? SerialNumber { get; set; }
+
+        
+        public int? CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public Category? Category { get; set; }
 
 
     }
