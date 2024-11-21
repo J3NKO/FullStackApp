@@ -17,6 +17,29 @@ namespace FullStackApp.Data
         //We are initialising/seeding data for the models here
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
+            modelBuilder.Entity<ItemClient>().HasKey(ix => new 
+            {
+
+                ix.ItemId,
+                ix.ClientId
+
+            });
+
+            modelBuilder.Entity<ItemClient>().HasOne(
+
+                i => i.Item
+
+                ).WithMany(ic => ic.ItemClients).HasForeignKey(i => i.ItemId);
+
+            modelBuilder.Entity<ItemClient>().HasOne(
+
+                c => c.Client
+
+                ).WithMany(ic => ic.ItemClients).HasForeignKey(i => i.ClientId);
+
+
             //the collection is of the model type Item
             modelBuilder.Entity<Item>().HasData(
                 
@@ -47,6 +70,10 @@ namespace FullStackApp.Data
             public DbSet<SerialNumber> SerialNumbers { get; set; }
 
             public DbSet<Category> Categories { get; set; }
+            
+            public DbSet<Client> Clients { get; set; }
+
+            public DbSet<ItemClient> ItemClients {  get; set; } 
 
 
     }

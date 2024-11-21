@@ -24,5 +24,7 @@ namespace FullStackApp.Models
         public Category? Category { get; set; }
 
 
+        public List<ItemClient> ItemClients { get; set; }
+
     }
 }

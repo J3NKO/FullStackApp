@@ -23,6 +23,8 @@ namespace FullStackApp.Controllers
 
             var item = await _Context.Items.Include(s => s.SerialNumber)
                                         .Include(c => c.Category)
+                                        .Include(ic => ic.ItemClients)
+                                        .ThenInclude(c => c.Client)
                                         .ToListAsync();
 
 
