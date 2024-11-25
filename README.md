@@ -5,6 +5,8 @@ of which I have been querying through SSMS ofcourse!
 
 -Using Razor pages
 
+-ASP.NET core middleware routing through built in pipeline
+
 I took a code first > DB approach with this application using Entity Framework/Migrations. Getting to grips with the package manager console and the .net environment here.
 
 TODO:
